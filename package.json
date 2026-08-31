@@ -1,0 +1,23 @@
+{
+  "name": "telegraph-outcome-judge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A deterministic, bounded-runtime WASM scorer for evaluating Miner answers on Telegraph.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "cargo test",
+    "build": "cargo build --release --target wasm32-unknown-unknown",
+    "verify:deterministic": "node --import tsx scripts/verify-wasm.ts target/wasm32-unknown-unknown/release/outcome_judge.wasm",
+    "verify:registered": "node --import tsx scripts/verify-telegraph-wasm.ts dist/outcome_judge_frq_c65_cap_q128_t320_a320_step05.wasm",
+    "verify:release": "npm run typecheck && npm test && npm run build && npm run verify:deterministic && npm run verify:registered"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "tsx": "^4.20.4",
+    "typescript": "^5.9.2"
+  }
+}

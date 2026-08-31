@@ -1,0 +1,215 @@
+{
+  "intent": "FRAUD_DETECTION",
+  "description": "Knowledge-style FRAUD_DETECTION cases mirroring the real Stage 2 validator shape: a factual question about a known fraud, a ground-truth description, and good (semantically matching) vs bad (fluent-but-wrong / off-topic / contradicting) prose answers. Used to measure separation the way the hidden benchmark does.",
+  "cases": [
+    {
+      "question": "What characterized the BitConnect cryptocurrency Ponzi scheme that collapsed in January 2018?",
+      "ground_truth": "BitConnect ran a Lending Program from 2017 into January 2018, falsely claiming a proprietary volatility software trading bot generated the returns paid to investors in its BCC token, when it was actually paying earlier investors with money from new investors in a Ponzi structure. It shut down on January 16, 2018 after Texas and North Carolina regulators issued cease-and-desist orders, and BCC collapsed over 90% within days; the SEC later charged founder Satish Kumbhani in a $2 billion-plus fraud.",
+      "answers": [
+        { "label": "good-match", "text": "BitConnect operated a lending program that falsely claimed a volatility trading bot produced its returns, but it paid old investors with new investors' money in a Ponzi structure. Texas and North Carolina cease-and-desist orders triggered its January 16 2018 shutdown, BCC fell over 90 percent, and the SEC charged Satish Kumbhani in a multi-billion-dollar fraud.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "It was a Ponzi scheme dressed as a crypto lending platform: the promised returns supposedly came from an automated trading bot but really came from later depositors. Regulators forced it to close in early 2018 and the BCC token crashed, with the founder later charged by the SEC.", "tier": "high" },
+        { "label": "vague-partial", "text": "BitConnect was a crypto project that turned out to be a scam and lost investors a lot of money before shutting down.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "BitConnect was a legitimate decentralized lending protocol whose BCC token appreciated steadily; it wound down in 2018 after voluntarily returning funds to all investors following a successful audit.", "tier": "low" },
+        { "label": "off-topic", "text": "Ethereum introduced proof-of-stake in 2022 through the Merge, reducing its energy consumption by over 99 percent.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "What characterized the Wells Fargo fake-accounts scandal that surfaced in 2016?",
+      "ground_truth": "Wells Fargo employees, pressured by aggressive sales quotas, opened roughly 1.5 million unauthorized deposit accounts and 623,000 credit card accounts without customer consent. The bank paid $185 million in fines in September 2016; a later review put the scope at about 3.5 million fraudulent accounts back to 2009, and around 5,300 employees were fired.",
+      "answers": [
+        { "label": "good-match", "text": "Under intense sales-quota pressure, Wells Fargo staff opened millions of deposit and credit-card accounts customers never authorized. The bank was fined $185 million in September 2016, later reviews found around 3.5 million fake accounts going back to 2009, and roughly 5,300 employees were dismissed.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "Employees secretly created unauthorized bank and card accounts to hit sales targets. Regulators fined the bank $185 million, the count of fraudulent accounts grew into the millions, and thousands of workers lost their jobs.", "tier": "high" },
+        { "label": "vague-partial", "text": "Wells Fargo got in trouble for a scandal involving fake accounts and had to pay fines.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "Wells Fargo was praised in 2016 for a customer-service initiative that opened convenient new accounts on request, boosting satisfaction scores with no regulatory concerns.", "tier": "low" },
+        { "label": "off-topic", "text": "The 2008 financial crisis was driven largely by subprime mortgage-backed securities and excessive leverage at major investment banks.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "What was the OneCoin fraud and who ran it?",
+      "ground_truth": "OneCoin, launched in 2014 by Ruja Ignatova and Sebastian Greenwood, was promoted as a cryptocurrency but had no genuine public blockchain and was controlled through a private database. Its multi-level-marketing network sold educational packages with purported mining rights, generating roughly $4 billion worldwide. Ignatova disappeared in 2017 and remains an FBI Ten Most Wanted fugitive.",
+      "answers": [
+        { "label": "good-match", "text": "OneCoin was a fake cryptocurrency run by Ruja Ignatova and Sebastian Greenwood from 2014. It had no real blockchain, just a private database, and used multi-level marketing to sell packages, taking in about $4 billion. Ignatova vanished in 2017 and is on the FBI's most-wanted list.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "It was a multi-level-marketing scam masquerading as a crypto coin, with no genuine blockchain behind it. Its founders raised billions selling bogus packages, and the main founder fled and is still a wanted fugitive.", "tier": "high" },
+        { "label": "vague-partial", "text": "OneCoin was a cryptocurrency scam that raised a lot of money and whose founder went missing.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "OneCoin was an early proof-of-work cryptocurrency with a transparent public blockchain, and its founders were later cleared of all wrongdoing after a full regulatory review.", "tier": "low" },
+        { "label": "off-topic", "text": "Bitcoin's block reward halves roughly every four years, reducing new supply issuance in a scheduled way.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "How did the FTX cryptocurrency exchange fraud unfold?",
+      "ground_truth": "FTX, founded by Sam Bankman-Fried, collapsed in November 2022 after customer funds were secretly diverted to its affiliated hedge fund Alameda Research. Prosecutors said about $8 billion of customer money was stolen. Bankman-Fried was convicted on seven fraud-related counts on November 2, 2023 and sentenced to 25 years in prison in March 2024.",
+      "answers": [
+        { "label": "good-match", "text": "FTX imploded in November 2022 when it emerged that customer deposits had been funneled to Alameda Research, its sister trading firm. Around $8 billion of customer funds went missing, and founder Sam Bankman-Fried was convicted on seven fraud counts and sentenced to 25 years.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "The exchange failed after customer money was secretly used by its affiliated hedge fund. Billions were lost, and its founder was found guilty of fraud and given a long prison sentence.", "tier": "high" },
+        { "label": "vague-partial", "text": "FTX was a big crypto exchange that collapsed and its founder was sent to prison.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "FTX remains a fully solvent, well-run exchange; its founder was praised by regulators for pioneering customer-fund segregation and never faced any charges.", "tier": "low" },
+        { "label": "off-topic", "text": "Stablecoins like USDC aim to hold a one-to-one peg with the US dollar through reserves of cash and short-term treasuries.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "What was the Wirecard accounting fraud?",
+      "ground_truth": "Wirecard disclosed on June 16, 2020 that 1.9 billion euros supposedly held in trust accounts at two Philippine banks could not be located; the banks denied any relationship and the documents were forged. CEO Markus Braun resigned and was arrested, and Wirecard filed for insolvency owing creditors about 3.5 billion euros.",
+      "answers": [
+        { "label": "good-match", "text": "Wirecard admitted in June 2020 that 1.9 billion euros it claimed to hold in Philippine trust accounts did not exist, with forged supporting documents. CEO Markus Braun resigned and was arrested, and the company collapsed into insolvency owing billions.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "A large chunk of cash the payments company said it held turned out to be fictitious, backed by fake paperwork. Its chief executive was arrested and the firm went bankrupt.", "tier": "high" },
+        { "label": "vague-partial", "text": "Wirecard was a payment company that collapsed after an accounting scandal.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "Wirecard's 2020 audit confirmed all 1.9 billion euros were fully present, and the company continued trading profitably with a clean bill of health from regulators.", "tier": "low" },
+        { "label": "off-topic", "text": "Visa and Mastercard operate four-party card networks connecting issuers, acquirers, merchants, and cardholders.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "What is a rug pull in decentralized finance?",
+      "ground_truth": "A rug pull is a DeFi scam where developers attract liquidity to a token or project, then abruptly withdraw the pooled funds or disable selling, leaving investors with worthless tokens. Common mechanics include removing liquidity from a decentralized exchange, minting unlimited new tokens, or hidden functions that block holders from selling.",
+      "answers": [
+        { "label": "good-match", "text": "It is a scam where a project's developers lure investors into providing liquidity, then suddenly drain the pool or lock selling, so token holders are left with something worthless. It often works by pulling liquidity off a DEX or using hidden code that stops people selling.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "Developers hype a token, collect everyone's money into a pool, then run off with the funds or freeze trades, wiping out holders.", "tier": "high" },
+        { "label": "vague-partial", "text": "It's a type of crypto scam where people lose their money to the developers.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "A rug pull is a legitimate liquidity-management technique where developers responsibly rebalance a pool to protect investors and guarantee stable returns.", "tier": "low" },
+        { "label": "off-topic", "text": "Automated market makers use a constant-product formula to price assets in a liquidity pool.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "How does an approval-based wallet drainer phishing attack work?",
+      "ground_truth": "An approval-based drainer tricks a user into signing a token approval or permit transaction on a malicious site, granting the attacker's contract permission to move the victim's tokens. Once approved, often for an unlimited amount, the attacker transfers the tokens out. The victim usually thinks they are minting an NFT or claiming an airdrop.",
+      "answers": [
+        { "label": "good-match", "text": "The attacker gets the victim to sign a token approval on a fake site, giving a malicious contract permission to move their tokens, usually an unlimited allowance. The victim believes they are claiming an airdrop or minting, and the attacker then drains the approved tokens.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "A scam site convinces you to approve spending on your tokens; once you sign, the attacker's contract can take them, and it often asks for an unlimited allowance while pretending to be a mint or claim.", "tier": "high" },
+        { "label": "vague-partial", "text": "It's a phishing attack that steals your crypto after you interact with a bad website.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "An approval transaction is a security feature that prevents drainers, because signing it locks your tokens so no contract can ever move them without a fresh signature each time.", "tier": "low" },
+        { "label": "off-topic", "text": "ERC-721 defines a standard interface for non-fungible tokens on Ethereum.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "What was the Bernie Madoff investment fraud?",
+      "ground_truth": "Bernie Madoff ran the largest Ponzi scheme in history through his firm, fabricating account statements and paying returns to existing investors with new investors' money rather than real trading. Losses were estimated around $65 billion in paper value. He was arrested in December 2008, pleaded guilty in 2009, and was sentenced to 150 years in prison.",
+      "answers": [
+        { "label": "good-match", "text": "Madoff operated the biggest Ponzi scheme ever, faking statements and paying old investors with money from new ones instead of actually trading. Paper losses ran to about $65 billion; he was arrested in 2008, pleaded guilty, and got 150 years.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "He ran a giant fake investment operation, using incoming deposits to pay earlier clients rather than real returns, and was eventually jailed for life after it collapsed.", "tier": "high" },
+        { "label": "vague-partial", "text": "Madoff was a financier who ran a huge scam and went to prison.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "Madoff was a pioneering fund manager whose consistent real returns were independently verified, and he retired with an unblemished record after decades of legitimate trading.", "tier": "low" },
+        { "label": "off-topic", "text": "Index funds passively track a market benchmark and typically charge low expense ratios.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "What is wash trading in cryptocurrency markets?",
+      "ground_truth": "Wash trading is market manipulation where a trader simultaneously buys and sells the same asset to create fake volume and misleading price activity, without real change in ownership. On crypto exchanges and NFT marketplaces it is used to inflate apparent demand, fake liquidity, or manipulate rankings, deceiving other participants.",
+      "answers": [
+        { "label": "good-match", "text": "It's a form of manipulation where someone buys and sells the same asset to themselves to fake volume and activity, with no genuine change in ownership. In crypto and NFTs it inflates apparent demand or liquidity to mislead others.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "A trader trades with themselves to fabricate fake trading volume and make an asset look more active or liquid than it really is, tricking other buyers.", "tier": "high" },
+        { "label": "vague-partial", "text": "It's when trading volume on an exchange is not real.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "Wash trading is an approved liquidity-provision service where market makers legitimately guarantee tight spreads and honest, fully transparent volume for all participants.", "tier": "low" },
+        { "label": "off-topic", "text": "Order books match buy and sell orders by price-time priority on centralized exchanges.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "What was the Enron accounting scandal?",
+      "ground_truth": "Enron used special-purpose entities and mark-to-market accounting to hide billions in debt and inflate reported profits, deceiving investors about its financial health. It collapsed into bankruptcy in December 2001, wiping out shareholders and employee pensions. Executives including Jeffrey Skilling and Kenneth Lay were convicted, and auditor Arthur Andersen was destroyed.",
+      "answers": [
+        { "label": "good-match", "text": "Enron hid massive debt and inflated profits using off-books entities and aggressive accounting, misleading investors about its health. It went bankrupt in late 2001, wiped out pensions, its executives were convicted, and its auditor Arthur Andersen collapsed too.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "The energy firm faked its profits and concealed its debts through accounting tricks, then imploded into bankruptcy, taking employee savings with it and landing its leaders in prison.", "tier": "high" },
+        { "label": "vague-partial", "text": "Enron was a company that went bankrupt after an accounting scandal.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "Enron was a model of transparent accounting whose conservative books were repeatedly praised by regulators, and it remains a profitable, well-run energy company today.", "tier": "low" },
+        { "label": "off-topic", "text": "Natural gas is often priced against the Henry Hub benchmark in North American markets.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "What are the warning signs of a fraudulent ICO or token sale?",
+      "ground_truth": "Red flags of a fraudulent ICO include anonymous or fake teams, plagiarized or vague whitepapers, guaranteed or unrealistic returns, no working product, aggressive multi-level referral incentives, unaudited or malicious smart contracts, and pressure to buy quickly. Many collect funds and disappear or deliver nothing.",
+      "answers": [
+        { "label": "good-match", "text": "Warning signs include anonymous or fake founders, copied or empty whitepapers, promises of guaranteed high returns, no real product, referral-driven hype, unaudited contracts, and urgency to buy in. Such projects often raise money and then vanish.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "Be wary if the team is hidden, the whitepaper is thin or stolen, returns are 'guaranteed,' there's no product, it leans on referral schemes, the code isn't audited, and you're pushed to buy fast.", "tier": "high" },
+        { "label": "vague-partial", "text": "A scam ICO is one where the project isn't real and you can lose money.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "A guarantee of fixed returns and an anonymous team are strong signs of a trustworthy, well-run ICO, since serious founders stay private and only real projects can promise profits.", "tier": "low" },
+        { "label": "off-topic", "text": "Gas fees on Ethereum are paid in gwei and vary with network congestion.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "What was the Theranos fraud?",
+      "ground_truth": "Theranos, led by Elizabeth Holmes, falsely claimed its devices could run a wide range of blood tests from a few drops of blood, while it actually relied on modified third-party analyzers and produced unreliable results. The company deceived investors, partners, and patients. Holmes was convicted of fraud in 2022 and sentenced to over 11 years in prison.",
+      "answers": [
+        { "label": "good-match", "text": "Theranos, run by Elizabeth Holmes, falsely claimed it could run many blood tests from a tiny sample, when it really used modified commercial machines and gave unreliable results, deceiving investors and patients. Holmes was convicted of fraud in 2022 and sentenced to over eleven years.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "The startup lied that its technology could perform full blood testing from a finger-prick, but the results were unreliable and it leaned on other companies' machines; its founder was ultimately convicted of fraud.", "tier": "high" },
+        { "label": "vague-partial", "text": "Theranos was a health startup whose founder was convicted after the technology didn't work.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "Theranos successfully commercialized breakthrough single-drop blood testing that passed every regulatory review, and its founder was celebrated for revolutionizing diagnostics with fully validated technology.", "tier": "low" },
+        { "label": "off-topic", "text": "A complete blood count measures red cells, white cells, and platelets in a sample.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "What is a pig butchering scam?",
+      "ground_truth": "A pig-butchering scam is a long-con investment fraud where scammers build a fake romantic or friendly relationship with a victim over weeks, then lure them into a bogus crypto or trading platform. Victims are shown fake gains and encouraged to invest more, until the scammers vanish with all the funds. The name refers to fattening the victim before the slaughter.",
+      "answers": [
+        { "label": "good-match", "text": "It's a slow investment con where scammers first build a fake romance or friendship, then steer the victim to a fraudulent crypto platform that shows fake profits, pushing them to deposit more until the scammers disappear with everything.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "Fraudsters spend weeks earning someone's trust, often romantically, then get them to 'invest' on a fake platform showing phony gains before stealing all the money.", "tier": "high" },
+        { "label": "vague-partial", "text": "It's an online scam where someone is tricked into investing and loses money.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "Pig butchering is a vetted mentorship program where experienced traders build genuine relationships to responsibly guide newcomers to reliable, regulated investment returns.", "tier": "low" },
+        { "label": "off-topic", "text": "Dollar-cost averaging spreads purchases over time to reduce the impact of volatility.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "What was the LIBOR rate-rigging scandal?",
+      "ground_truth": "Major banks colluded to manipulate LIBOR, the benchmark interest rate underpinning trillions in loans and derivatives, by submitting false rate estimates to benefit their trading positions and appear more creditworthy. Investigations from around 2012 led to billions in fines against banks like Barclays, UBS, and Deutsche Bank, and criminal charges against several traders.",
+      "answers": [
+        { "label": "good-match", "text": "Banks conspired to rig LIBOR, the rate behind trillions in loans and derivatives, by submitting false estimates to help their trades and look healthier. From about 2012 they were fined billions, including Barclays and UBS, and some traders were criminally charged.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "Several big banks lied about the interest rates they reported so they could profit on trades and seem more solid, manipulating a benchmark tied to huge sums; regulators later fined them billions and prosecuted traders.", "tier": "high" },
+        { "label": "vague-partial", "text": "It was a scandal where banks manipulated an interest rate and got fined.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "The LIBOR process was found to be fully accurate and fairly set, and the banks involved were commended by regulators for their transparent and honest rate submissions.", "tier": "low" },
+        { "label": "off-topic", "text": "Central banks set overnight policy rates to influence inflation and employment.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "How does a phishing email that impersonates a bank typically operate?",
+      "ground_truth": "A bank-impersonation phishing email spoofs the bank's branding and sender address, creates urgency such as a supposed security alert or locked account, and links to a fake login page that harvests the victim's credentials. The stolen username, password, and sometimes one-time codes are then used to access the real account and steal funds.",
+      "answers": [
+        { "label": "good-match", "text": "It fakes the bank's branding and sender, invents an urgent problem like a locked account, and links to a counterfeit login page that captures your username, password, and any one-time code, which the attacker then uses to get into your real account.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "The email pretends to be your bank, scares you with a fake alert, and sends you to a lookalike site that steals your login details so the scammer can access your account.", "tier": "high" },
+        { "label": "vague-partial", "text": "It's a fake email that tries to steal your bank login.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "A bank phishing email is an official security tool that verifies your identity by safely confirming your password through a trusted link, protecting your account from fraud.", "tier": "low" },
+        { "label": "off-topic", "text": "SPF, DKIM, and DMARC are email authentication standards that help verify sender domains.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "What was the Bre-X gold mining fraud?",
+      "ground_truth": "Bre-X was a Canadian mining company that claimed to have discovered an enormous gold deposit at Busang in Indonesia in the mid-1990s. The samples had been salted with gold, and no significant deposit existed. When independent drilling revealed the fraud in 1997, the stock collapsed from billions in value, and a key geologist died in a fall from a helicopter.",
+      "answers": [
+        { "label": "good-match", "text": "Bre-X claimed a huge gold find at Busang in Indonesia, but the core samples had been salted with gold and there was no real deposit. When independent drilling exposed it in 1997 the stock crashed from billions, and a lead geologist died falling from a helicopter.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "The mining company faked a massive gold discovery by tampering with samples; once outside testing showed no gold existed, its share value evaporated.", "tier": "high" },
+        { "label": "vague-partial", "text": "Bre-X was a mining company involved in a gold fraud whose stock collapsed.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "Bre-X's Busang discovery was confirmed by independent geologists as one of the largest genuine gold deposits ever, and the company delivered strong verified returns to shareholders.", "tier": "low" },
+        { "label": "off-topic", "text": "Gold is measured in troy ounces and is widely used as a reserve asset by central banks.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "What is a Ponzi scheme and how does it differ from a pyramid scheme?",
+      "ground_truth": "A Ponzi scheme pays returns to earlier investors using money from newer investors, run centrally by an operator who fakes profits, and collapses when new money slows. A pyramid scheme instead pays participants primarily for recruiting others rather than from real product sales; each recruit must enlist more, and it collapses when recruitment stalls. Both are unsustainable frauds.",
+      "answers": [
+        { "label": "good-match", "text": "A Ponzi pays old investors with new investors' money under a central operator faking returns, collapsing when inflows dry up. A pyramid pays people mainly for recruiting new members rather than for real sales, and it fails when recruitment stops. Both are fraudulent and unsustainable.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "In a Ponzi, one operator secretly funds 'returns' from new deposits; in a pyramid, earnings come from signing up more recruits rather than selling anything real. Each falls apart once new money or recruits run out.", "tier": "high" },
+        { "label": "vague-partial", "text": "They are both scams where people lose money when it collapses.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "Ponzi and pyramid schemes are legitimate compounding-investment structures that reliably generate real profits for all participants indefinitely as long as marketing continues.", "tier": "low" },
+        { "label": "off-topic", "text": "Compound interest grows a principal by reinvesting earned interest over successive periods.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "What was the 1Malaysia Development Berhad (1MDB) scandal?",
+      "ground_truth": "1MDB was a Malaysian state investment fund from which an estimated $4.5 billion was misappropriated by officials and associates, including financier Jho Low, and laundered through global banks to buy real estate, art, and fund a Hollywood film. It implicated Malaysian Prime Minister Najib Razak, who was convicted of corruption, and led to major penalties against Goldman Sachs.",
+      "answers": [
+        { "label": "good-match", "text": "Around $4.5 billion was looted from Malaysia's 1MDB state fund by officials and associates like Jho Low and laundered through international banks into property, art, and a film. It brought down PM Najib Razak, who was convicted of corruption, and led to big penalties for Goldman Sachs.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "Billions were stolen from a Malaysian sovereign fund and washed through global banks to buy luxury assets; the scandal saw the prime minister convicted and a major bank penalized.", "tier": "high" },
+        { "label": "vague-partial", "text": "1MDB was a government fund caught up in a huge corruption scandal.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "1MDB was a transparently managed sovereign fund that delivered strong verified returns, and independent audits confirmed every dollar was properly accounted for with no wrongdoing.", "tier": "low" },
+        { "label": "off-topic", "text": "Sovereign wealth funds invest national reserves across asset classes for long-term returns.", "tier": "low" }
+      ]
+    },
+    {
+      "question": "How does a fake tech-support scam typically work?",
+      "ground_truth": "A tech-support scam convinces a victim that their computer is infected, via a pop-up, cold call, or search ad impersonating a company like Microsoft. The scammer persuades the victim to grant remote access or pay for fake repairs and worthless software, sometimes stealing data or installing malware, and pressures payment through gift cards or wire transfer.",
+      "answers": [
+        { "label": "good-match", "text": "The scammer makes the victim believe their PC is infected through a fake pop-up, cold call, or ad posing as Microsoft, then gets them to allow remote access or pay for bogus repairs and software, often stealing data or installing malware and demanding gift cards or wire payment.", "tier": "high" },
+        { "label": "good-paraphrase", "text": "Pretending to be a big tech company, the scammer scares you into thinking your computer has a virus, then takes remote control or charges you for fake fixes, usually insisting on untraceable payment.", "tier": "high" },
+        { "label": "vague-partial", "text": "It's a scam where someone pretends to fix your computer to take your money.", "tier": "mid" },
+        { "label": "fluent-wrong", "text": "A tech-support pop-up is an official diagnostic from your operating system, and calling the listed number connects you to certified technicians who safely resolve real threats at no risk.", "tier": "low" },
+        { "label": "off-topic", "text": "An operating system schedules processes and manages memory and hardware resources.", "tier": "low" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "version": "1.0.0",
+  "description": "Broad natural-language FRAUD_DETECTION cases without canonical BLOCK/ALLOW/RECHECK labels. Good and bad answers are intentionally fluent and topically similar so the benchmark measures factual separation rather than verdict-token recognition.",
+  "cases": [
+    {
+      "family": "ponzi-scheme",
+      "question": "What made the BitConnect operation deceptive?",
+      "ground_truth": "BitConnect promised unusually high returns from a purported trading bot while relying on referral recruitment and new participant funds to sustain payouts.",
+      "good_answers": ["The operation advertised exceptional bot-generated returns, recruited investors through a multilevel referral structure, and used incoming participant money to support earlier payouts."],
+      "bad_answers": ["BitConnect operated as an audited cryptocurrency exchange whose customer returns came from transparent trading revenue rather than recruitment or incoming deposits."]
+    },
+    {
+      "family": "pyramid-scheme",
+      "question": "Why was OneCoin widely treated as a deceptive investment operation?",
+      "ground_truth": "OneCoin sold educational packages through multilevel recruitment while claiming to issue a cryptocurrency that lacked a genuine public blockchain.",
+      "good_answers": ["Participants bought packages in a recruitment-driven network, while the supposed coin did not run on a verifiable public blockchain."],
+      "bad_answers": ["It was an open proof-of-work currency with independently verifiable blocks, and adoption grew without referral commissions or membership packages."]
+    },
+    {
+      "family": "customer-fund-misuse",
+      "question": "What conduct was central to the collapse of FTX?",
+      "ground_truth": "Customer assets were diverted to Alameda Research and used for trading, investments, political donations, and expenses without customers receiving the custody protections they expected.",
+      "good_answers": ["Funds customers believed were held by the exchange were transferred to Alameda and spent or traded for purposes customers had not authorized."],
+      "bad_answers": ["Customer assets remained fully segregated and backed one-for-one; the business failed solely because a software outage temporarily prevented withdrawals."]
+    },
+    {
+      "family": "rug-pull",
+      "question": "What evidence indicates a token project performed a rug pull?",
+      "ground_truth": "The deployer controlled most liquidity, promoted the token aggressively, removed the liquidity shortly after deposits increased, and routed the proceeds through related wallets.",
+      "good_answers": ["The same operator dominated the liquidity, attracted deposits, withdrew the pool, and moved the proceeds among connected addresses soon afterward."],
+      "bad_answers": ["Liquidity remained locked under independent control, ownership was renounced, and the price decline resulted from ordinary selling across unrelated wallets."]
+    },
+    {
+      "family": "wash-trading",
+      "question": "Which activity supports a wash-trading conclusion?",
+      "ground_truth": "A small cluster of commonly funded wallets repeatedly traded the same assets back and forth at coordinated prices without meaningful changes in beneficial ownership.",
+      "good_answers": ["Related wallets recycled identical assets among themselves, coordinated prices, and generated volume while effective ownership stayed within the cluster."],
+      "bad_answers": ["Numerous independently funded participants bought different assets at market prices and ownership dispersed to unrelated holders over time."]
+    },
+    {
+      "family": "address-poisoning",
+      "question": "How does an address-poisoning attempt try to misdirect a payment?",
+      "ground_truth": "An attacker sends a tiny transfer from a lookalike address so the decoy appears in transaction history and may later be copied instead of the intended recipient.",
+      "good_answers": ["A dust transfer places a visually similar address in the victim's history, hoping the victim copies that decoy for a later payment."],
+      "bad_answers": ["A validator replaces the recipient during consensus and permanently changes every historical transaction to display the validator's own address."]
+    },
+    {
+      "family": "business-email-compromise",
+      "question": "What pattern indicates business email compromise in an invoice payment?",
+      "ground_truth": "A compromised supplier mailbox introduced an urgent last-minute bank-account change, bypassed the established verification contact, and redirected payment to an account controlled by the intruder.",
+      "good_answers": ["The supplier account was taken over, an urgent replacement account was supplied outside the normal confirmation process, and money went to the intruder."],
+      "bad_answers": ["The supplier used its established verified contact, the account details matched the signed master agreement, and the scheduled payment followed normal approval controls."]
+    },
+    {
+      "family": "identity-theft",
+      "question": "Why does this loan application indicate identity theft?",
+      "ground_truth": "The applicant used another person's identity documents and credit history, while device, phone, and payout-account evidence linked the application to a different individual.",
+      "good_answers": ["Borrowing credentials belonged to one person, but the device and destination account connected the application to someone else using those credentials."],
+      "bad_answers": ["The identity documents, device history, verified phone, and receiving account all consistently belonged to the applicant who completed the lender's checks."]
+    },
+    {
+      "family": "honeypot-token",
+      "question": "What makes this token behave like a honeypot?",
+      "ground_truth": "The contract permits ordinary users to buy but prevents them from selling, while privileged addresses can transfer freely and extract liquidity.",
+      "good_answers": ["Public buyers can enter, yet sale paths fail for them; privileged wallets retain transfer access and can withdraw the pool."],
+      "bad_answers": ["Every holder can buy and sell through the same unrestricted transfer path, no privileged wallet exists, and liquidity is time-locked."]
+    },
+    {
+      "family": "sybil-rewards",
+      "question": "What supports identifying an airdrop farming cluster?",
+      "ground_truth": "Hundreds of recently created wallets received funding from one source, performed nearly identical actions at coordinated times, and consolidated rewards back to a common beneficiary.",
+      "good_answers": ["The wallets share initial funding, synchronized behavior, and a common destination for rewards, indicating control by one beneficiary."],
+      "bad_answers": ["The wallets were funded independently over several years, behaved differently, and retained rewards at unrelated destinations with no shared controller."]
+    },
+    {
+      "family": "account-takeover",
+      "question": "Which facts indicate a SIM-swap account takeover?",
+      "ground_truth": "The phone number was ported without the owner's authorization, password resets followed immediately, and assets moved to a new destination from an unfamiliar device.",
+      "good_answers": ["An unauthorized number port preceded credential resets and a transfer from a new device to a newly introduced destination."],
+      "bad_answers": ["The owner requested the number port, used a previously enrolled device, made no credential changes, and transferred to a long-used personal account."]
+    },
+    {
+      "family": "market-manipulation",
+      "question": "How was the oracle price manipulated?",
+      "ground_truth": "The actor used thin liquidity and borrowed capital to move the spot market sampled by the oracle, then borrowed against the temporarily inflated collateral value.",
+      "good_answers": ["Borrowed funds moved a shallow reference market, the oracle adopted that temporary price, and the actor extracted loans against overstated collateral."],
+      "bad_answers": ["The oracle aggregated deep independent markets over a long window, collateral prices stayed unchanged, and all borrowing remained below ordinary limits."]
+    },
+    {
+      "family": "romance-investment",
+      "question": "What characterizes a pig-butchering investment operation?",
+      "ground_truth": "An operator builds a long-term personal relationship, directs the target to a controlled investment platform, displays fabricated profits, and demands additional payments when withdrawal is attempted.",
+      "good_answers": ["Trust is cultivated personally before the target is moved to a controlled platform showing invented gains and asked for more money to withdraw."],
+      "bad_answers": ["The investor independently chooses a regulated custodian, verifies holdings on-chain, and withdraws assets without extra taxes, unlock fees, or personal solicitation."]
+    },
+    {
+      "family": "money-laundering-layering",
+      "question": "Which behavior is consistent with layering illicit proceeds?",
+      "ground_truth": "Funds were split across many intermediaries, repeatedly swapped between assets and networks, recombined, and sent onward in a pattern designed to obscure their origin.",
+      "good_answers": ["The proceeds were fragmented, moved through repeated swaps and chains, then consolidated after a route that made source tracing more difficult."],
+      "bad_answers": ["A salary payment moved directly from an identified employer to the employee's verified account with a stable asset and complete records."]
+    },
+    {
+      "family": "friendly-fraud",
+      "question": "What evidence supports a friendly-fraud chargeback finding?",
+      "ground_truth": "The cardholder disputed an authorized purchase even though account history, device continuity, delivery confirmation, and later use of the purchased service linked the transaction to that cardholder.",
+      "good_answers": ["The purchaser later denied the charge despite matching device history, confirmed delivery, and continued use of the service by the same account."],
+      "bad_answers": ["A new device in another country made the purchase, delivery failed, the account never used the service, and the cardholder reported the card stolen beforehand."]
+    },
+    {
+      "family": "fake-charity",
+      "question": "Why does this donation campaign appear deceptive?",
+      "ground_truth": "The organizer copied another charity's identity, supplied unverifiable beneficiary stories, sent donations to personal wallets, and provided no evidence that funds reached the stated relief effort.",
+      "good_answers": ["The campaign impersonated an existing charity, used unsupported stories, and routed donations to personal wallets without proof of delivery to beneficiaries."],
+      "bad_answers": ["The registered charity controlled the campaign, published audited disbursements, and beneficiaries independently confirmed receiving the reported assistance."]
+    }
+  ]
+}

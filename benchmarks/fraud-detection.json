@@ -1,0 +1,1306 @@
+{
+  "intent": "FRAUD_DETECTION",
+  "description": "Adversarial FRAUD_DETECTION scoring corpus. Each case has a question, a ground_truth verdict+reason, and tiered answers (high = correct verdict + good evidence, mid = safe abstention, low = wrong/dangerous verdict). Tier ordering is the metric: a correct scorer must rank high > mid > low.",
+  "cases": [
+    {
+      "question": "Assess whether this Base transaction should be blocked for fraud risk.",
+      "ground_truth": "BLOCK: phishing approval targets a malicious spender",
+      "answers": [
+        {
+          "label": "structured block",
+          "text": "{\"verdict\":\"BLOCK\",\"reason\":\"phishing malicious spender\"}",
+          "tier": "high"
+        },
+        {
+          "label": "plain block",
+          "text": "Block this phishing approval to the malicious spender.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: spender reputation is unavailable",
+          "tier": "mid"
+        },
+        {
+          "label": "dangerous false negative",
+          "text": "ALLOW: this transaction is safe",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Does this wallet interaction show fraud or malicious activity?",
+      "ground_truth": "ALLOW: no malicious activity or scam indicators found",
+      "answers": [
+        {
+          "label": "negated antonyms",
+          "text": "No phishing, fraud, or scam indicators were detected.",
+          "tier": "high"
+        },
+        {
+          "label": "safe synonym",
+          "text": "The interaction appears benign and legitimate.",
+          "tier": "high"
+        },
+        {
+          "label": "uncertain",
+          "text": "RECHECK: evidence is insufficient",
+          "tier": "mid"
+        },
+        {
+          "label": "false positive",
+          "text": "BLOCK: malicious phishing scam",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Classify an unlimited ERC-20 approval to a known phishing address.",
+      "ground_truth": "{\"is_fraud\":true,\"reason\":\"unlimited approval phishing\"}",
+      "answers": [
+        {
+          "label": "equivalent JSON",
+          "text": "{\"verdict\":\"BLOCK\",\"reasonCodes\":[\"UNLIMITED_APPROVAL\",\"PHISHING\"]}",
+          "tier": "high"
+        },
+        {
+          "label": "correct terse",
+          "text": "BLOCK: phishing approval",
+          "tier": "high"
+        },
+        {
+          "label": "safe abstention",
+          "text": "RECHECK: target reputation needs confirmation",
+          "tier": "mid"
+        },
+        {
+          "label": "wrong allow",
+          "text": "The approval is safe and should be allowed.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Is this transfer safe to execute?",
+      "ground_truth": "BLOCK: this cannot be considered safe",
+      "answers": [
+        {
+          "label": "unsafe synonym",
+          "text": "This transfer is unsafe and must be blocked.",
+          "tier": "high"
+        },
+        {
+          "label": "same negation",
+          "text": "It is not safe for execution.",
+          "tier": "high"
+        },
+        {
+          "label": "uncertain",
+          "text": "Unknown; obtain another fraud signal.",
+          "tier": "mid"
+        },
+        {
+          "label": "opposite",
+          "text": "Safe and legitimate to execute.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Classify the fraud risk when the available RPC evidence is incomplete.",
+      "ground_truth": "RECHECK: insufficient evidence to determine whether the transfer is fraudulent",
+      "answers": [
+        {
+          "label": "honest uncertainty",
+          "text": "Inconclusive: unable to determine fraud from the available evidence.",
+          "tier": "high"
+        },
+        {
+          "label": "manual review",
+          "text": "There is no evidence to rule out fraud; manual review is required.",
+          "tier": "high"
+        },
+        {
+          "label": "unsupported allow",
+          "text": "ALLOW: no fraud was detected.",
+          "tier": "low"
+        },
+        {
+          "label": "unsupported block",
+          "text": "BLOCK: malicious transfer.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Evaluate a transaction and return any reasonable structured fraud classification.",
+      "ground_truth": "BLOCK: critical risk from a malicious drainer contract",
+      "answers": [
+        {
+          "label": "classification schema",
+          "text": "{\"classification\":\"fraudulent\",\"risk\":\"critical\",\"reason\":\"malicious drainer\"}",
+          "tier": "high"
+        },
+        {
+          "label": "recommendation schema",
+          "text": "{\"recommendation\":\"block\",\"reason\":\"drainer contract\"}",
+          "tier": "high"
+        },
+        {
+          "label": "honest abstention",
+          "text": "RECHECK: target bytecode is unavailable.",
+          "tier": "mid"
+        },
+        {
+          "label": "opposite schema",
+          "text": "{\"classification\":\"benign\",\"risk\":\"minimal\"}",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Determine whether the observed wallet transfer is fraudulent.",
+      "ground_truth": "ALLOW: observed transfer is legitimate with no indication of fraud",
+      "answers": [
+        {
+          "label": "punctuated negation",
+          "text": "This isn't a scam and no indication of fraud was observed.",
+          "tier": "high"
+        },
+        {
+          "label": "benign schema",
+          "text": "{\"classification\":\"benign\",\"risk\":\"minimal\"}",
+          "tier": "high"
+        },
+        {
+          "label": "needs review",
+          "text": "Unable to verify the recipient; needs manual review.",
+          "tier": "mid"
+        },
+        {
+          "label": "false positive",
+          "text": "Fraudulent malicious transfer. Block it.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Should this setApprovalForAll to an unverified operator be blocked?",
+      "ground_truth": "BLOCK: collection-wide operator approval to an unverified address",
+      "answers": [
+        {
+          "label": "correct block terse",
+          "text": "BLOCK: unverified operator granted collection-wide approval.",
+          "tier": "high"
+        },
+        {
+          "label": "structured block",
+          "text": "{\"verdict\":\"BLOCK\",\"reason\":\"unverified operator setApprovalForAll\"}",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: operator reputation not yet resolved.",
+          "tier": "mid"
+        },
+        {
+          "label": "verbose wrong allow",
+          "text": "After a very thorough and careful review of the collection-wide operator approval, the setApprovalForAll call, the unverified operator address, and all associated phishing and fraud risk factors, this transaction is safe to allow.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Is this token transfer to a freshly seen recipient fraudulent?",
+      "ground_truth": "RECHECK: first-seen recipient with no reputation history",
+      "answers": [
+        {
+          "label": "correct recheck",
+          "text": "RECHECK: recipient has no prior history; gather more evidence.",
+          "tier": "high"
+        },
+        {
+          "label": "correct recheck 2",
+          "text": "Insufficient reputation on a first-seen recipient; defer the decision.",
+          "tier": "high"
+        },
+        {
+          "label": "overconfident block",
+          "text": "BLOCK: definitely a scam recipient.",
+          "tier": "low"
+        },
+        {
+          "label": "overconfident allow",
+          "text": "ALLOW: recipient is definitely trustworthy.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Classify this approve() that grants a finite allowance to a verified router.",
+      "ground_truth": "ALLOW: finite allowance to a verified, reputable router",
+      "answers": [
+        {
+          "label": "correct allow",
+          "text": "ALLOW: bounded allowance to a known-good router.",
+          "tier": "high"
+        },
+        {
+          "label": "correct allow struct",
+          "text": "{\"verdict\":\"ALLOW\",\"reason\":\"finite allowance verified router\"}",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm router allowlist entry.",
+          "tier": "mid"
+        },
+        {
+          "label": "keyword-stuffed block",
+          "text": "phishing malicious drainer scam fraud unlimited approval BLOCK critical risk",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Assess whether a permit signature to an unknown spender is fraudulent.",
+      "ground_truth": "BLOCK: off-chain permit grants spending authority to an unknown spender",
+      "answers": [
+        {
+          "label": "correct block",
+          "text": "BLOCK: permit hands spending power to an unvetted spender.",
+          "tier": "high"
+        },
+        {
+          "label": "correct block json",
+          "text": "{\"verdict\":\"BLOCK\",\"reason\":\"permit to unknown spender\"}",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: spender identity unresolved.",
+          "tier": "mid"
+        },
+        {
+          "label": "dangerous false negative",
+          "text": "This permit looks completely fine and safe to sign.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Does this contract interaction drain wallet assets?",
+      "ground_truth": "BLOCK: interaction routes assets to a known drainer",
+      "answers": [
+        {
+          "label": "correct block",
+          "text": "BLOCK: assets are routed to a known drainer contract.",
+          "tier": "high"
+        },
+        {
+          "label": "negation correct",
+          "text": "This is not safe; it sends funds to a drainer.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: destination not fully classified.",
+          "tier": "mid"
+        },
+        {
+          "label": "opposite",
+          "text": "No draining occurs; the interaction is harmless.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Is the address-poisoning risk on this lookalike recipient real?",
+      "ground_truth": "BLOCK: recipient is a lookalike address-poisoning target",
+      "answers": [
+        {
+          "label": "correct block",
+          "text": "BLOCK: lookalike recipient consistent with address poisoning.",
+          "tier": "high"
+        },
+        {
+          "label": "correct block terse",
+          "text": "Address poisoning detected; block the transfer.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: compare against prior legitimate recipient.",
+          "tier": "mid"
+        },
+        {
+          "label": "false allow",
+          "text": "The recipient looks correct; allow it.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Classify a routine transfer to the user's own previously used address.",
+      "ground_truth": "ALLOW: transfer to a previously used, self-owned address",
+      "answers": [
+        {
+          "label": "correct allow",
+          "text": "ALLOW: destination matches a prior self-owned recipient.",
+          "tier": "high"
+        },
+        {
+          "label": "correct allow negation",
+          "text": "No poisoning or scam; this is a known self-address.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm self-ownership.",
+          "tier": "mid"
+        },
+        {
+          "label": "false positive",
+          "text": "BLOCK: address poisoning scam.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Evaluate whether the proxy admin change on this token is malicious.",
+      "ground_truth": "BLOCK: unexpected proxy admin change enabling implementation swap",
+      "answers": [
+        {
+          "label": "correct block",
+          "text": "BLOCK: proxy admin change lets an attacker swap the implementation.",
+          "tier": "high"
+        },
+        {
+          "label": "correct block json",
+          "text": "{\"verdict\":\"BLOCK\",\"reason\":\"malicious proxy admin drift\"}",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm whether the admin change is authorized.",
+          "tier": "mid"
+        },
+        {
+          "label": "verbose false allow",
+          "text": "Looking carefully at the proxy, the admin, the implementation contract, and the upgrade mechanism in great detail, everything about this proxy admin change appears entirely normal, expected, and safe to allow.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Is this a wash-trading pattern that should be flagged?",
+      "ground_truth": "BLOCK: circular self-dealing consistent with wash trading",
+      "answers": [
+        {
+          "label": "correct block",
+          "text": "BLOCK: circular transfers indicate wash trading.",
+          "tier": "high"
+        },
+        {
+          "label": "correct block terse",
+          "text": "Wash trading pattern; flag and block.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: need more transfer history.",
+          "tier": "mid"
+        },
+        {
+          "label": "false allow",
+          "text": "Normal trading volume; nothing to flag.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Determine fraud risk for a transfer with fully verified benign context.",
+      "ground_truth": "ALLOW: verified benign transfer with clean recipient reputation",
+      "answers": [
+        {
+          "label": "correct allow",
+          "text": "ALLOW: recipient reputation is clean and context is benign.",
+          "tier": "high"
+        },
+        {
+          "label": "correct allow negation",
+          "text": "No fraud, phishing, or scam indicators; safe to proceed.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: revalidate reputation freshness.",
+          "tier": "mid"
+        },
+        {
+          "label": "verbose keyword false block",
+          "text": "phishing malicious drainer scam fraud sybil wash-trading poisoning unlimited approval — after extensive analysis, BLOCK this critical high-risk fraudulent transaction immediately.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Should a transfer during a detected velocity spike be blocked?",
+      "ground_truth": "RECHECK: velocity spike warrants another independent signal before deciding",
+      "answers": [
+        {
+          "label": "correct recheck",
+          "text": "RECHECK: velocity spike detected; obtain another independent signal.",
+          "tier": "high"
+        },
+        {
+          "label": "correct recheck 2",
+          "text": "Defer: the spike is suspicious but not conclusive on its own.",
+          "tier": "high"
+        },
+        {
+          "label": "overconfident block",
+          "text": "BLOCK: this is definitely fraud.",
+          "tier": "low"
+        },
+        {
+          "label": "overconfident allow",
+          "text": "ALLOW: the spike is irrelevant and it is safe.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Classify this transaction with a unicode-heavy description.",
+      "ground_truth": "BLOCK: 恶意 phishing approval to a malicious spender 🚨",
+      "answers": [
+        {
+          "label": "correct block unicode",
+          "text": "BLOCK: 恶意授权 to a malicious spender — phishing 🚨",
+          "tier": "high"
+        },
+        {
+          "label": "correct block ascii",
+          "text": "BLOCK: malicious phishing approval to the spender.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: 需要更多信息 before deciding.",
+          "tier": "mid"
+        },
+        {
+          "label": "false allow",
+          "text": "ALLOW: 安全 and legitimate, no risk.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Is this a legitimate contract deployment or a scam token?",
+      "ground_truth": "BLOCK: impersonation token mimicking a well-known asset",
+      "answers": [
+        {
+          "label": "correct block",
+          "text": "BLOCK: impersonation token spoofing a known asset.",
+          "tier": "high"
+        },
+        {
+          "label": "correct block json",
+          "text": "{\"verdict\":\"BLOCK\",\"reason\":\"impersonation scam token\"}",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: compare against canonical token metadata.",
+          "tier": "mid"
+        },
+        {
+          "label": "false allow",
+          "text": "Genuine token; safe to interact with.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Evaluate a self-transfer of zero value.",
+      "ground_truth": "ALLOW: zero-value self-transfer poses no fraud risk",
+      "answers": [
+        {
+          "label": "correct allow",
+          "text": "ALLOW: harmless zero-value self-transfer.",
+          "tier": "high"
+        },
+        {
+          "label": "correct allow terse",
+          "text": "No risk; zero-value self-transfer.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm the destination is self-owned.",
+          "tier": "mid"
+        },
+        {
+          "label": "false block",
+          "text": "BLOCK: fraudulent malicious transfer.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Should this sybil-cluster-linked recipient be flagged?",
+      "ground_truth": "BLOCK: recipient belongs to a known sybil cluster",
+      "answers": [
+        {
+          "label": "correct block",
+          "text": "BLOCK: recipient is part of a known sybil cluster.",
+          "tier": "high"
+        },
+        {
+          "label": "correct block terse",
+          "text": "Sybil-linked recipient; block.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm cluster attribution.",
+          "tier": "mid"
+        },
+        {
+          "label": "false allow",
+          "text": "Independent legitimate recipient; allow.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Classify a transfer where the only fraud claim is unsupported by evidence.",
+      "ground_truth": "RECHECK: fraud claim asserted but not supported by available evidence",
+      "answers": [
+        {
+          "label": "correct recheck",
+          "text": "RECHECK: the fraud assertion lacks supporting evidence.",
+          "tier": "high"
+        },
+        {
+          "label": "correct recheck 2",
+          "text": "Cannot confirm the fraud claim; defer for evidence.",
+          "tier": "high"
+        },
+        {
+          "label": "fabricated block",
+          "text": "BLOCK: obviously a malicious phishing scam drainer.",
+          "tier": "low"
+        },
+        {
+          "label": "fabricated allow",
+          "text": "ALLOW: definitely completely safe, no doubt.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Assess a transaction that revokes a previously granted approval.",
+      "ground_truth": "ALLOW: approval revocation reduces spending authority and is safe",
+      "answers": [
+        {
+          "label": "correct allow",
+          "text": "ALLOW: revoking an approval only reduces authority; safe.",
+          "tier": "high"
+        },
+        {
+          "label": "correct allow negation",
+          "text": "This grants no new authority and is not a fraud risk.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm the target of the revocation.",
+          "tier": "mid"
+        },
+        {
+          "label": "false block",
+          "text": "BLOCK: dangerous unlimited approval to a phishing spender.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Return a fraud verdict for a transaction to a sanctioned address.",
+      "ground_truth": "BLOCK: recipient appears on a sanctions designation list",
+      "answers": [
+        {
+          "label": "correct block",
+          "text": "BLOCK: recipient is a sanctioned address.",
+          "tier": "high"
+        },
+        {
+          "label": "correct block json",
+          "text": "{\"verdict\":\"BLOCK\",\"reason\":\"sanctioned recipient\"}",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm the sanctions match.",
+          "tier": "mid"
+        },
+        {
+          "label": "dangerous false negative",
+          "text": "ALLOW: the recipient is fine and safe to pay.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Classify a transaction that increases an existing allowance to unlimited.",
+      "ground_truth": "BLOCK: allowance raised to the maximum for an unvetted spender",
+      "answers": [
+        {
+          "label": "block clear",
+          "text": "BLOCK: unlimited allowance granted to an unvetted spender.",
+          "tier": "high"
+        },
+        {
+          "label": "block json",
+          "text": "{\"verdict\":\"BLOCK\",\"reason\":\"unlimited allowance increase\"}",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm spender allowlist status.",
+          "tier": "mid"
+        },
+        {
+          "label": "false allow",
+          "text": "ALLOW: raising the allowance is routine and safe.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Is this a legitimate airdrop claim or a drainer trap?",
+      "ground_truth": "BLOCK: claim routes approval to a drainer contract",
+      "answers": [
+        {
+          "label": "block",
+          "text": "BLOCK: the claim grants approval to a known drainer.",
+          "tier": "high"
+        },
+        {
+          "label": "block negation",
+          "text": "This is not a real airdrop; it is a drainer trap.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: verify the claim contract source.",
+          "tier": "mid"
+        },
+        {
+          "label": "false allow",
+          "text": "Genuine airdrop; safe to claim.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Evaluate a same-asset round-trip between two controlled wallets.",
+      "ground_truth": "BLOCK: self-dealing round-trip consistent with wash trading",
+      "answers": [
+        {
+          "label": "block",
+          "text": "BLOCK: round-trip between controlled wallets is wash trading.",
+          "tier": "high"
+        },
+        {
+          "label": "block terse",
+          "text": "Wash trading round-trip; block.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: need to confirm common control.",
+          "tier": "mid"
+        },
+        {
+          "label": "false allow",
+          "text": "Two independent parties trading; allow.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Assess a withdrawal to a long-established, reputable exchange deposit address.",
+      "ground_truth": "ALLOW: withdrawal to a reputable, long-established deposit address",
+      "answers": [
+        {
+          "label": "allow",
+          "text": "ALLOW: destination is a reputable exchange deposit address.",
+          "tier": "high"
+        },
+        {
+          "label": "allow negation",
+          "text": "No scam or phishing; the deposit address is well established.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm the deposit address is current.",
+          "tier": "mid"
+        },
+        {
+          "label": "false block",
+          "text": "BLOCK: malicious exchange scam.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Classify a permit2 batch approval to multiple unknown spenders.",
+      "ground_truth": "BLOCK: batch permit grants authority to multiple unknown spenders",
+      "answers": [
+        {
+          "label": "block",
+          "text": "BLOCK: permit2 batch authorizes several unvetted spenders.",
+          "tier": "high"
+        },
+        {
+          "label": "block json",
+          "text": "{\"verdict\":\"BLOCK\",\"reason\":\"permit2 batch unknown spenders\"}",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: resolve each spender's reputation.",
+          "tier": "mid"
+        },
+        {
+          "label": "false allow",
+          "text": "The batch approval is convenient and safe to sign.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Is a transfer of dust to many addresses a poisoning campaign?",
+      "ground_truth": "BLOCK: dusting pattern consistent with address-poisoning setup",
+      "answers": [
+        {
+          "label": "block",
+          "text": "BLOCK: mass dust transfers indicate address poisoning.",
+          "tier": "high"
+        },
+        {
+          "label": "block terse",
+          "text": "Dusting/poisoning campaign; block.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: correlate with later lookalike transfers.",
+          "tier": "mid"
+        },
+        {
+          "label": "false allow",
+          "text": "Harmless dust; nothing to flag.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Evaluate a contract call whose target bytecode could not be fetched.",
+      "ground_truth": "RECHECK: target bytecode unavailable, evidence incomplete",
+      "answers": [
+        {
+          "label": "recheck",
+          "text": "RECHECK: cannot fetch target bytecode; evidence incomplete.",
+          "tier": "high"
+        },
+        {
+          "label": "recheck 2",
+          "text": "Inconclusive: the target could not be inspected.",
+          "tier": "high"
+        },
+        {
+          "label": "guess block",
+          "text": "BLOCK: definitely a malicious contract.",
+          "tier": "low"
+        },
+        {
+          "label": "guess allow",
+          "text": "ALLOW: certainly a safe contract.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Classify a signed message that is a plain login, not a transaction.",
+      "ground_truth": "ALLOW: off-chain login signature grants no spending authority",
+      "answers": [
+        {
+          "label": "allow",
+          "text": "ALLOW: a login signature moves no funds and grants no authority.",
+          "tier": "high"
+        },
+        {
+          "label": "allow negation",
+          "text": "This is not a token approval and poses no fraud risk.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm the message is a login and not a permit.",
+          "tier": "mid"
+        },
+        {
+          "label": "false block",
+          "text": "BLOCK: malicious signature request.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Assess whether interacting with a newly deployed unaudited token is fraud.",
+      "ground_truth": "RECHECK: unaudited new deployment warrants caution and more evidence",
+      "answers": [
+        {
+          "label": "recheck",
+          "text": "RECHECK: newly deployed and unaudited; gather more evidence.",
+          "tier": "high"
+        },
+        {
+          "label": "recheck 2",
+          "text": "Defer: insufficient history to judge this new token.",
+          "tier": "high"
+        },
+        {
+          "label": "overblock",
+          "text": "BLOCK: this is definitely a scam token.",
+          "tier": "low"
+        },
+        {
+          "label": "overallow",
+          "text": "ALLOW: it is definitely a safe token.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Is a transfer that exactly matches the user's stated intent fraudulent?",
+      "ground_truth": "ALLOW: transfer matches the declared recipient, asset, and amount",
+      "answers": [
+        {
+          "label": "allow",
+          "text": "ALLOW: recipient, asset, and amount match the declared intent.",
+          "tier": "high"
+        },
+        {
+          "label": "allow json",
+          "text": "{\"verdict\":\"ALLOW\",\"reason\":\"matches declared intent\"}",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: revalidate the declared intent binding.",
+          "tier": "mid"
+        },
+        {
+          "label": "false block",
+          "text": "BLOCK: fraudulent mismatched transfer.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Classify a call that transfers ownership of a vault to an unknown address.",
+      "ground_truth": "BLOCK: ownership transfer to an unknown address is high risk",
+      "answers": [
+        {
+          "label": "block",
+          "text": "BLOCK: vault ownership handed to an unknown address.",
+          "tier": "high"
+        },
+        {
+          "label": "block json",
+          "text": "{\"verdict\":\"BLOCK\",\"reason\":\"ownership transfer to unknown\"}",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm the new owner is authorized.",
+          "tier": "mid"
+        },
+        {
+          "label": "false allow",
+          "text": "Routine ownership update; allow.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Evaluate whether a repeated identical micro-approval is suspicious.",
+      "ground_truth": "RECHECK: repeated micro-approvals are unusual but not conclusive",
+      "answers": [
+        {
+          "label": "recheck",
+          "text": "RECHECK: repeated micro-approvals are unusual; seek another signal.",
+          "tier": "high"
+        },
+        {
+          "label": "recheck 2",
+          "text": "Defer: the pattern is odd but not conclusively fraud.",
+          "tier": "high"
+        },
+        {
+          "label": "overblock",
+          "text": "BLOCK: obviously a malicious drainer.",
+          "tier": "low"
+        },
+        {
+          "label": "overallow",
+          "text": "ALLOW: totally normal, nothing to see.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Is a swap through a well-known aggregator router fraudulent?",
+      "ground_truth": "ALLOW: swap routed through a verified, reputable aggregator",
+      "answers": [
+        {
+          "label": "allow",
+          "text": "ALLOW: the router is a verified reputable aggregator.",
+          "tier": "high"
+        },
+        {
+          "label": "allow negation",
+          "text": "No phishing or drainer behavior; the router is trusted.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm the router address matches the allowlist.",
+          "tier": "mid"
+        },
+        {
+          "label": "false block",
+          "text": "BLOCK: malicious router scam.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Classify a transaction that grants approval then immediately transfers out.",
+      "ground_truth": "BLOCK: approve-then-drain sequence targeting the wallet",
+      "answers": [
+        {
+          "label": "block",
+          "text": "BLOCK: approve-then-transfer-out is a drain sequence.",
+          "tier": "high"
+        },
+        {
+          "label": "block terse",
+          "text": "Approve-and-drain pattern; block.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm the transfer destination.",
+          "tier": "mid"
+        },
+        {
+          "label": "false allow",
+          "text": "Standard approve and transfer; safe.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Assess a governance vote transaction with no asset movement.",
+      "ground_truth": "ALLOW: governance vote moves no assets and grants no spending authority",
+      "answers": [
+        {
+          "label": "allow",
+          "text": "ALLOW: a governance vote moves no funds.",
+          "tier": "high"
+        },
+        {
+          "label": "allow negation",
+          "text": "This is not a fraud risk; no assets or authority change.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm the proposal target.",
+          "tier": "mid"
+        },
+        {
+          "label": "false block",
+          "text": "BLOCK: malicious governance drain.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Is a bridge deposit to a canonical, audited bridge fraudulent?",
+      "ground_truth": "ALLOW: deposit to a canonical audited bridge contract",
+      "answers": [
+        {
+          "label": "allow",
+          "text": "ALLOW: canonical audited bridge; safe deposit.",
+          "tier": "high"
+        },
+        {
+          "label": "allow json",
+          "text": "{\"verdict\":\"ALLOW\",\"reason\":\"canonical audited bridge\"}",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm the bridge address is canonical.",
+          "tier": "mid"
+        },
+        {
+          "label": "false block",
+          "text": "BLOCK: bridge phishing scam.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Classify a transaction whose only signal is a mismatched recipient.",
+      "ground_truth": "BLOCK: recipient does not match the declared intent recipient",
+      "answers": [
+        {
+          "label": "block",
+          "text": "BLOCK: recipient mismatches the declared intent.",
+          "tier": "high"
+        },
+        {
+          "label": "block json",
+          "text": "{\"verdict\":\"BLOCK\",\"reason\":\"recipient mismatch\"}",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: re-confirm the intended recipient.",
+          "tier": "mid"
+        },
+        {
+          "label": "false allow",
+          "text": "Recipient looks fine; allow.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Evaluate a well-formed answer that hedges without committing.",
+      "ground_truth": "RECHECK: evidence is mixed and no confident verdict is warranted",
+      "answers": [
+        {
+          "label": "recheck",
+          "text": "RECHECK: signals are mixed; no confident verdict.",
+          "tier": "high"
+        },
+        {
+          "label": "recheck 2",
+          "text": "Inconclusive: the evidence does not support a firm decision.",
+          "tier": "high"
+        },
+        {
+          "label": "false confident block",
+          "text": "BLOCK: clearly malicious fraud.",
+          "tier": "low"
+        },
+        {
+          "label": "false confident allow",
+          "text": "ALLOW: clearly completely safe.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Is a transfer to a freshly funded intermediary before a large move suspicious?",
+      "ground_truth": "RECHECK: fresh intermediary before a large move warrants another signal",
+      "answers": [
+        {
+          "label": "recheck",
+          "text": "RECHECK: fresh intermediary ahead of a large move; seek more evidence.",
+          "tier": "high"
+        },
+        {
+          "label": "recheck 2",
+          "text": "Defer: the staging pattern is suspicious but not conclusive.",
+          "tier": "high"
+        },
+        {
+          "label": "overblock",
+          "text": "BLOCK: definitely money laundering.",
+          "tier": "low"
+        },
+        {
+          "label": "overallow",
+          "text": "ALLOW: nothing unusual at all.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Classify a token approval that is being revoked to zero.",
+      "ground_truth": "ALLOW: setting the allowance to zero revokes authority and is safe",
+      "answers": [
+        {
+          "label": "allow",
+          "text": "ALLOW: revoking to zero only removes authority.",
+          "tier": "high"
+        },
+        {
+          "label": "allow negation",
+          "text": "This grants no new authority and is not a fraud risk.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm the token being revoked.",
+          "tier": "mid"
+        },
+        {
+          "label": "false block",
+          "text": "BLOCK: dangerous unlimited approval to a phishing spender.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Is a mint from a verified collection contract fraudulent?",
+      "ground_truth": "ALLOW: mint from a verified, reputable collection contract",
+      "answers": [
+        {
+          "label": "allow",
+          "text": "ALLOW: verified reputable collection; safe mint.",
+          "tier": "high"
+        },
+        {
+          "label": "allow negation",
+          "text": "No scam or phishing; the collection is verified.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm the collection contract address.",
+          "tier": "mid"
+        },
+        {
+          "label": "false block",
+          "text": "BLOCK: impersonation mint scam.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Classify a transaction interacting with a contract flagged by two sources.",
+      "ground_truth": "BLOCK: target contract flagged malicious by independent sources",
+      "answers": [
+        {
+          "label": "block",
+          "text": "BLOCK: independent sources flag the target as malicious.",
+          "tier": "high"
+        },
+        {
+          "label": "block json",
+          "text": "{\"verdict\":\"BLOCK\",\"reason\":\"independently flagged malicious\"}",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: reconcile the two source reports.",
+          "tier": "mid"
+        },
+        {
+          "label": "false allow",
+          "text": "No issues found; allow.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Evaluate an answer that lists evidence but never states a verdict.",
+      "ground_truth": "BLOCK: unlimited approval to a flagged spender",
+      "answers": [
+        {
+          "label": "block with evidence",
+          "text": "BLOCK: unlimited approval to a spender flagged for phishing.",
+          "tier": "high"
+        },
+        {
+          "label": "block terse",
+          "text": "Block: flagged spender, unlimited approval.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm the spender flag.",
+          "tier": "mid"
+        },
+        {
+          "label": "evidence only no verdict",
+          "text": "The spender is flagged and the approval is unlimited.",
+          "tier": "mid"
+        }
+      ]
+    },
+    {
+      "question": "Is a standard ETH transfer to a saved contact address fraudulent?",
+      "ground_truth": "ALLOW: transfer to a previously saved, trusted contact",
+      "answers": [
+        {
+          "label": "allow",
+          "text": "ALLOW: destination is a saved trusted contact.",
+          "tier": "high"
+        },
+        {
+          "label": "allow negation",
+          "text": "No poisoning or scam; this is a known saved contact.",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: confirm the contact entry.",
+          "tier": "mid"
+        },
+        {
+          "label": "false block",
+          "text": "BLOCK: address poisoning scam.",
+          "tier": "low"
+        }
+      ]
+    },
+    {
+      "question": "Classify a call to an upgradeable proxy with an unexpected new implementation.",
+      "ground_truth": "BLOCK: proxy points to an unexpected, unverified implementation",
+      "answers": [
+        {
+          "label": "block",
+          "text": "BLOCK: the proxy now targets an unverified implementation.",
+          "tier": "high"
+        },
+        {
+          "label": "block json",
+          "text": "{\"verdict\":\"BLOCK\",\"reason\":\"unexpected proxy implementation\"}",
+          "tier": "high"
+        },
+        {
+          "label": "abstain",
+          "text": "RECHECK: verify whether the upgrade was authorized.",
+          "tier": "mid"
+        },
+        {
+          "label": "false allow",
+          "text": "Proxy upgrades are normal; allow.",
+          "tier": "low"
+        }
+      ]
+    }
+  ]
+}
